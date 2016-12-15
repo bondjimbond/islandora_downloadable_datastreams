@@ -43,7 +43,7 @@ function islandora_downloadable_image_admin_settings() {
  */
 function islandora_downloadable_image_block_info() {
   return array(
-    'islandora_downloadable_image_download' => array(
+    'large_image_download' => array(
       'visibility' => BLOCK_VISIBILITY_LISTED,
       'pages' => 'islandora/object/*',
       'cache' => DRUPAL_CACHE_PER_PAGE,
@@ -59,9 +59,9 @@ function islandora_downloadable_image_block_info() {
 function islandora_downloadable_image_block_view($delta) {
   $to_render = array();
 
-  // Get object CModel and datastream
+  // Get object CModel and PID - this may be repeating itself, I'm not sure.
   $object = menu_get_object('islandora_object', 2);
-  
+  $pid = $object->id;
   $ids = array();
   $ids['pid'] = $pid;
   $ids['cmodel'] = islandora_object_load($pid)->models[0];
@@ -70,11 +70,11 @@ function islandora_downloadable_image_block_view($delta) {
   if ($ids['cmodel']=='islandora:sp_large_image_cmodel') {
     $dsid = variable_get('islandora_downloadable_image_datastream', 'JPG');
     global $base_url;
-    $to_render['content'] = $base_url . "/islandora/object/" . $pid . "/datastream/" . $dsid . "/view";
+    $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">Download</a>';
     
     }
-  else {
-    break;
-  }
+//  else {
+//    break;
+//  }
   return $to_render;
 }
