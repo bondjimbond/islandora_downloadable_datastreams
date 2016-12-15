@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * The main islandora_downloadable_image module file.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function islandora_downloadable_image_menu() {
+  $items['admin/islandora/tools/downloadimage'] = array(
+    'title' => 'Islandora Downloadable Image',
+    'description' => 'Configure Islandora Downloadable Image.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_downloadable_image_admin_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Admin settings form builder.
+*/
+
+function islandora_downloadable_image_admin_settings() {
+  global $base_url;
+
+  $form['islandora_downloadable_image_datastream'] = array(
+    '#title' => t('Image datastream to make downloadable'),
+    '#type' => 'textfield',
+    '#size' => 60,
+    '#default_value' => variable_get('islandora_downloadable_image_datastream', 'JPG'),
+    '#description' => t('The datastream to provide a download link to.'),
+    '#maxlength' => 255,
+  );
+  return system_settings_form($form);
+}
+ 
+/**
+ * Implements hook_block_info(). Creates blocks.
+ */
+function islandora_downloadable_image_block_info() {
+  return array(
+    'islandora_downloadable_image_download' => array(
+      'visibility' => BLOCK_VISIBILITY_LISTED,
+      'pages' => 'islandora/object/*',
+      'cache' => DRUPAL_CACHE_PER_PAGE,
+      'info' => t('Large image download block'),
+    ), 
+  );
+}
+
+/**
+ * Implements hook_block_view().
+ */
+ 
+function islandora_downloadable_image_block_view($delta) {
+  $to_render = array();
+
+  // Get object CModel and datastream
+  $object = menu_get_object('islandora_object', 2);
+  
+  $ids = array();
+  $ids['pid'] = $pid;
+  $ids['cmodel'] = islandora_object_load($pid)->models[0];
+  
+  // If object is a large image, proceed - otherwise, break.
+  if ($ids['cmodel']=='islandora:sp_large_image_cmodel') {
+    $dsid = variable_get('islandora_downloadable_image_datastream', 'JPG');
+    global $base_url;
+    $to_render['content'] = $base_url . "/islandora/object/" . $pid . "/datastream/" . $dsid . "/view";
+    
+    }
+  else {
+    break;
+  }
+  return $to_render;
+}
