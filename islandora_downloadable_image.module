@@ -70,7 +70,7 @@ function islandora_downloadable_image_block_view($delta) {
   if ($ids['cmodel']=='islandora:sp_large_image_cmodel') {
     $dsid = variable_get('islandora_downloadable_image_datastream', 'JPG');
     global $base_url;
-    $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">Download</a>';
+    $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">Download</a></div>';
     
     }
 //  else {
