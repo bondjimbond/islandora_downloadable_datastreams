@@ -73,8 +73,5 @@ function islandora_downloadable_image_block_view($delta) {
     $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">Download</a></div>';
     
     }
-//  else {
-//    break;
-//  }
   return $to_render;
 }
