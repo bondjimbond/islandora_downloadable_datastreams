@@ -76,12 +76,24 @@ function islandora_downloadable_image_block_view($delta) {
   $ids['cmodel'] = islandora_object_load($pid)->models[0];
   
   // If object is a large image, proceed - otherwise, break.
-  if ($ids['cmodel']=='islandora:sp_large_image_cmodel') {
-    $dsid = variable_get('islandora_downloadable_image_datastream', 'JP2');
-    global $base_url;
-    $label = variable_get('islandora_downloadable_image_label', 'Download');
-    $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">' . $label . '</a></div>';
-    
+
+  if ($ids['cmodel']=='islandora:newspaperIssueCModel' || $ids['cmodel']=='islandora:bookCModel' || $ids['cmodel']=='islandora:sp_large_image_cmodel') {
+    if ($ids['cmodel']=='islandora:sp_large_image_cmodel') {
+      $dsid = variable_get('islandora_downloadable_image_datastream', 'JP2');
     }
+    elseif ($ids['cmodel']=='islandora:newspaperIssueCModel' || $ids['cmodel']=='islandora:bookCModel') {
+      if (!$object['PDF']) {
+       $dsid = "none";
+      }
+      else {
+        $dsid = "PDF";
+      }
+    }
+    if ($dsid != "none") {
+      global $base_url;
+      $label = variable_get('islandora_downloadable_image_label', 'Download');
+      $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">' . $label . '</a></div>';
+     } 
+  }
   return $to_render;
 }
