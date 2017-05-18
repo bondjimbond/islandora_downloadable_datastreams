@@ -69,6 +69,17 @@ function islandora_downloadable_image_block_view($delta) {
         $dsid = "PDF";
       }
     }
+  // For audio, assume PROXY_MP3 for now. Make this configurable - either OBJ or PROXY_MP3.
+    elseif ($ids['cmodel'] == 'islandora:sp-audioCModel') {
+      $dsid = "PROXY_MP3";
+    }
+
+  // For video, assume MP4 datastream until we make it configurable instead.
+    elseif ($ids['cmodel'] == 'islandora:sp_videoCModel') {
+      $dsid = "MP4";
+    }
+
+  // Create the link if a DSID is selected
     if ($dsid != "none") {
       global $base_url;
       $label = variable_get('islandora_downloadable_datastreams_label', 'Download');
