@@ -42,6 +42,8 @@ function islandora_downloadable_image_block_info() {
  */
  
 function islandora_downloadable_image_block_view($delta) {
+  // use the utilities.inc file
+  module_load_include('inc', 'islandora_downloadable_image', 'includes/utilities');
   $to_render = array();
   // Get object CModel and PID - this may be repeating itself, I'm not sure.
   $object = menu_get_object('islandora_object', 2);
@@ -52,7 +54,9 @@ function islandora_downloadable_image_block_view($delta) {
   
   // If object is a large image, proceed - otherwise, break.
 
-  if ($ids['cmodel']=='islandora:newspaperIssueCModel' || $ids['cmodel']=='islandora:bookCModel' || $ids['cmodel']=='islandora:sp_large_image_cmodel') {
+//  if ($ids['cmodel']=='islandora:newspaperIssueCModel' || $ids['cmodel']=='islandora:bookCModel' || $ids['cmodel']=='islandora:sp_large_image_cmodel') {
+
+  if (islandora_downloadable_datastreams_show_for_cmodel($object)) {
     if ($ids['cmodel']=='islandora:sp_large_image_cmodel') {
       $dsid = variable_get('islandora_downloadable_image_datastream', 'JP2');
     }
