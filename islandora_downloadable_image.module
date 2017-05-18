@@ -51,7 +51,7 @@ function islandora_downloadable_image_block_view($delta) {
   $ids = array();
   $ids['pid'] = $pid;
   $ids['cmodel'] = islandora_object_load($pid)->models[0];
-  
+  $dsid = "none";  
   // If object is a selected CModel, proceed - otherwise, don't render.
 
   if (islandora_downloadable_datastreams_show_for_cmodel($object)) {
