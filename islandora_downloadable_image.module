@@ -9,44 +9,20 @@
  * Implements hook_menu().
  */
 function islandora_downloadable_image_menu() {
-  $items['admin/islandora/tools/downloadimage'] = array(
-    'title' => 'Islandora Downloadable Image',
-    'description' => 'Configure Islandora Downloadable Image.',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('islandora_downloadable_image_admin_settings'),
-    'access arguments' => array('administer site configuration'),
-    'type' => MENU_NORMAL_ITEM,
+  return array(
+    'admin/islandora/tools/downloadblock' => array(
+      'title' => 'Islandora Downloadable Datastreams',
+      'description' => 'Configure Islandora Downloadable Datastreams.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('islandora_downloadable_datastreams_admin_form'),
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'includes/admin.form.inc',
+    ),
   );
   return $items;
 }
 
-/**
- * Admin settings form builder.
-*/
-
-function islandora_downloadable_image_admin_settings() {
-  global $base_url;
-
-  $form['islandora_downloadable_image_datastream'] = array(
-    '#title' => t('Image datastream to make downloadable'),
-    '#type' => 'textfield',
-    '#size' => 60,
-    '#default_value' => variable_get('islandora_downloadable_image_datastream', 'JP2'),
-    '#description' => t('The datastream to provide a download link to.'),
-    '#maxlength' => 255,
-  );
-  $form['islandora_downloadable_image_label'] = array(
-    '#title' => t('Label for download block'),
-    '#type' => 'textfield',
-    '#size' => 60,
-    '#default_value' => variable_get('islandora_downloadable_image_label', 'Download'),
-    '#description' => t('The linked text for the download block.'),
-    '#maxlength' => 255,
-  );
-
-  return system_settings_form($form);
-}
- 
 /**
  * Implements hook_block_info(). Creates blocks.
  */
@@ -67,7 +43,6 @@ function islandora_downloadable_image_block_info() {
  
 function islandora_downloadable_image_block_view($delta) {
   $to_render = array();
-
   // Get object CModel and PID - this may be repeating itself, I'm not sure.
   $object = menu_get_object('islandora_object', 2);
   $pid = $object->id;
