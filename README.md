@@ -1,5 +1,7 @@
-# islandora_downloadable_image
-Creates a block that allows users to download a large image.
+# Islandora Downloadable Image
+Creates a block that allows users to download un-exposed datastreams on certain content models. 
+Currently displays for large image, newspaper issue, and book.
+Large Image datastream may be configured. Book and Newspaper Issue download PDFs if they exist.
 
 ## Requirements
 * [Islandora](https://github.com/Islandora/islandora)
