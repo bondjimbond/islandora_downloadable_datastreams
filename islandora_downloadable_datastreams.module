@@ -47,44 +47,47 @@ function islandora_downloadable_datastreams_block_view($delta) {
   $to_render = array();
   // Get object CModel and PID - this may be repeating itself, I'm not sure.
   $object = menu_get_object('islandora_object', 2);
-  $pid = $object->id;
-  $ids = array();
-  $ids['pid'] = $pid;
-  $ids['cmodel'] = islandora_object_load($pid)->models[0];
-  $dsid = "none";  
-  // If object is a selected CModel, proceed - otherwise, don't render.
 
-  if (islandora_downloadable_datastreams_show_for_cmodel($object)) {
-    // Choose DSID for large images
-    if ($ids['cmodel']=='islandora:sp_large_image_cmodel') {
-      $dsid = variable_get('islandora_downloadable_datastreams_image_dsid', 'JP2');
-    }
-   // For newspapers and books, assume PDFs
-    elseif ($ids['cmodel']=='islandora:newspaperIssueCModel' || $ids['cmodel']=='islandora:bookCModel') {
-      // If there's no PDF datastream, do nothing. Otherwise, PDF.
-      if (!$object['PDF']) {
-       $dsid = "none";
+  if ($object) {
+    $pid = $object->id;
+    $ids = array();
+    $ids['pid'] = $pid;
+    $ids['cmodel'] = islandora_object_load($pid)->models[0];
+    $dsid = "none";  
+    // If object is a selected CModel, proceed - otherwise, don't render.
+
+    if (islandora_downloadable_datastreams_show_for_cmodel($object)) {
+      // Choose DSID for large images
+      if ($ids['cmodel']=='islandora:sp_large_image_cmodel') {
+        $dsid = variable_get('islandora_downloadable_datastreams_image_dsid', 'JP2');
       }
-      else {
-        $dsid = "PDF";
+     // For newspapers and books, assume PDFs
+      elseif ($ids['cmodel']=='islandora:newspaperIssueCModel' || $ids['cmodel']=='islandora:bookCModel') {
+        // If there's no PDF datastream, do nothing. Otherwise, PDF.
+        if (!$object['PDF']) {
+         $dsid = "none";
+        }
+        else {
+          $dsid = "PDF";
+        }
       }
-    }
-  // For audio, assume PROXY_MP3 for now. Make this configurable - either OBJ or PROXY_MP3.
-    elseif ($ids['cmodel'] == 'islandora:sp-audioCModel') {
-      $dsid = "PROXY_MP3";
-    }
+    // For audio, assume PROXY_MP3 for now. Make this configurable - either OBJ or PROXY_MP3.
+      elseif ($ids['cmodel'] == 'islandora:sp-audioCModel') {
+        $dsid = "PROXY_MP3";
+      }
 
-  // For video, assume MP4 datastream until we make it configurable instead.
-    elseif ($ids['cmodel'] == 'islandora:sp_videoCModel') {
-      $dsid = "MP4";
-    }
+    // For video, assume MP4 datastream until we make it configurable instead.
+      elseif ($ids['cmodel'] == 'islandora:sp_videoCModel') {
+        $dsid = "MP4";
+      }
 
-  // Create the link if a DSID is selected
-    if ($dsid != "none") {
-      global $base_url;
-      $label = variable_get('islandora_downloadable_datastreams_label', 'Download');
-      $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">' . $label . '</a></div>';
-     } 
-  }
+    // Create the link if a DSID is selected
+      if ($dsid != "none") {
+        global $base_url;
+        $label = variable_get('islandora_downloadable_datastreams_label', 'Download');
+        $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">' . $label . '</a></div>';
+      } 
+    }
   return $to_render;
+  }
 }
