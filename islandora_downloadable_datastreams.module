@@ -2,13 +2,13 @@
 
 /**
  * @file
- * The main islandora_downloadable_image module file.
+ * The main islandora_downloadable_datastreams module file.
  */
 
 /**
  * Implements hook_menu().
  */
-function islandora_downloadable_image_menu() {
+function islandora_downloadable_datastreams_menu() {
   return array(
     'admin/islandora/tools/downloadblock' => array(
       'title' => 'Islandora Downloadable Datastreams',
@@ -26,13 +26,13 @@ function islandora_downloadable_image_menu() {
 /**
  * Implements hook_block_info(). Creates blocks.
  */
-function islandora_downloadable_image_block_info() {
+function islandora_downloadable_datastreams_block_info() {
   return array(
-    'large_image_download' => array(
+    'datastream_download' => array(
       'visibility' => BLOCK_VISIBILITY_LISTED,
       'pages' => 'islandora/object/*',
       'cache' => DRUPAL_CACHE_PER_PAGE,
-      'info' => t('Large image download block'),
+      'info' => t('Datastream download block'),
     ), 
   );
 }
@@ -41,9 +41,9 @@ function islandora_downloadable_image_block_info() {
  * Implements hook_block_view().
  */
  
-function islandora_downloadable_image_block_view($delta) {
+function islandora_downloadable_datastreams_block_view($delta) {
   // use the utilities.inc file
-  module_load_include('inc', 'islandora_downloadable_image', 'includes/utilities');
+  module_load_include('inc', 'islandora_downloadable_datastreams', 'includes/utilities');
   $to_render = array();
   // Get object CModel and PID - this may be repeating itself, I'm not sure.
   $object = menu_get_object('islandora_object', 2);
