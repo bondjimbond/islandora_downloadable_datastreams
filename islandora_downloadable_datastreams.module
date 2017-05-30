@@ -85,7 +85,7 @@ function islandora_downloadable_datastreams_block_view($delta) {
       if ($dsid != "none") {
         global $base_url;
         $label = variable_get('islandora_downloadable_datastreams_label', 'Download');
-        $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/view">' . $label . '</a></div>';
+        $to_render['content'] = '<div class="downloadlink"><a href="' . $base_url . '/islandora/object/' . $pid . '/datastream/' . $dsid . '/download">' . $label . '</a></div>';
       } 
     }
   return $to_render;
