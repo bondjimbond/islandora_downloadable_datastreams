@@ -10,8 +10,6 @@
 function islandora_downloadable_datastreams_uninstall() {
   $vars = array(
     'islandora_downloadable_datastreams_image_dsid',
-    'islandora_downloadable_image_datastream',
-    'islandora_downloadable_image_label',
     'islandora_downloadable_datastreams_label',
     'islandora_downloadable_datastreams_selected_cmodels',
   );
