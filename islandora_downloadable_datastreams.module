@@ -47,7 +47,6 @@ function islandora_downloadable_datastreams_block_view($delta) {
   $to_render = array();
   // Get object CModel and PID - this may be repeating itself, I'm not sure.
   $object = menu_get_object('islandora_object', 2);
-
   if ($object) {
     $pid = $object->id;
     $ids = array();
@@ -81,6 +80,13 @@ function islandora_downloadable_datastreams_block_view($delta) {
         $dsid = "MP4";
       }
 
+    // For PDF, check if viewer is present
+      elseif ($ids['cmodel'] == 'islandora:sp_pdf') {
+        $viewer = islandora_downloadable_datastreams_check_viewer($ids);
+        if ($viewer !== "none") {
+          $dsid = "OBJ";
+        }
+      }
     // Create the link if a DSID is selected
       if ($dsid != "none") {
         global $base_url;
