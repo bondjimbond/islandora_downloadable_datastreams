@@ -15,12 +15,13 @@ On the config page:
 - Enter the label to use for the Download block.
 - Select the content models for which you want the block to be available.
 
-Note: While all content models are listed on this screen, only five are actually usable:
+Note: While all content models are listed on this screen, only six are actually usable:
 - Large Image
 - Book
 - Newspaper Issue
 - Audio
 - Video
+- PDF (displays only when a viewer is being used)
 
 ## Customization
 The block creates a simple HTML link, in a div with the CSS class "downloadlink". Apply CSS as you like.
