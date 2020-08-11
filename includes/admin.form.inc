@@ -22,6 +22,15 @@ print("hi hi");
     '#maxlength' => 255,
   );
 
+  $form['islandora_downloadable_datastreams_video_dsid'] = array(
+    '#title' => t('Video datastream to make downloadable'),
+    '#type' => 'textfield',
+    '#size' => 60,
+    '#default_value' => variable_get('islandora_downloadable_datastreams_video_dsid', 'MP4'),
+    '#description' => t('The datastream to provide a download link to.'),
+    '#maxlength' => 255,
+  );
+
   $form['islandora_downloadable_datastreams_label'] = array(
     '#title' => t('Label for download block'),
     '#type' => 'textfield',
@@ -88,6 +97,7 @@ function islandora_downloadable_datastreams_admin_form_submit(array $form, array
   $enabled = array_keys(array_filter($form_state['values']['downloadable_table']));
   variable_set('islandora_downloadable_datastreams_selected_cmodels', $enabled);
   variable_set('islandora_downloadable_datastreams_image_dsid', $form_state['values']['islandora_downloadable_datastreams_image_dsid']);
+  variable_set('islandora_downloadable_datastreams_video_dsid', $form_state['values']['islandora_downloadable_datastreams_video_dsid']);
   variable_set('islandora_downloadable_datastreams_label', $form_state['values']['islandora_downloadable_datastreams_label']);
   drupal_set_message(t("Configuration saved."));
 }

@@ -77,7 +77,7 @@ function islandora_downloadable_datastreams_block_view($delta) {
 
     // For video, assume MP4 datastream until we make it configurable instead.
       elseif ($ids['cmodel'] == 'islandora:sp_videoCModel') {
-        $dsid = "MP4";
+        $dsid = variable_get('islandora_downloadable_datastreams_video_dsid', 'MP4');
       }
 
     // For binary objects
