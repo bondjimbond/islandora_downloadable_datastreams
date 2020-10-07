@@ -101,7 +101,10 @@ function islandora_downloadable_datastreams_block_view($delta) {
           $dsid = "PDF";
         }
       }
-
+    // For Documents, we want the OBJ.
+      elseif ($ids['cmodel'] == 'islandora:sp_document') {
+        $dsid= "OBJ";
+      }
     // Create the link if a DSID is selected
       if ($dsid != "none") {
         global $base_url;
